@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Campus WiFi Sentinel - Run Test</title>
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+        <span class="pulse"></span>
+
+        <div>
+            <b>Campus WiFi</b>
+            <small>SENTINEL</small>
+        </div>
+    </div>
+
+
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/run-test.html">Run Test</a>
+        <a href="/heatmap.html">Heatmap</a>
+    </nav>
+
+
+    <div class="live">
+        ● SYSTEM LIVE
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <div>
+
+            <p class="eyebrow">
+                LIVE NETWORK MEASUREMENT
+            </p>
+
+            <h1>
+                Test your campus<br>
+                <span>WiFi connection.</span>
+            </h1>
+
+            <p class="lead">
+                Run a real network test and contribute measurable
+                WiFi performance data to the campus network map.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="test-grid">
+
+
+        <!-- TEST PANEL -->
+
+        <div class="panel">
+
+            <div class="panel-head">
+
+                <div>
+
+                    <p class="eyebrow">
+                        LIVE MEASUREMENT
+                    </p>
+
+                    <h2>
+                        Run a campus test
+                    </h2>
+
+                </div>
+
+                <span class="badge">
+                    TCP / MULTITHREADED
+                </span>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="location-box">
+
+                <div class="loc-icon">
+                    ◎
+                </div>
+
+                <div>
+
+                    <b id="locationLabel">
+                        Location not selected
+                    </b>
+
+                    <small id="locationSub">
+                        Use GPS outdoors or enter an indoor tag.
+                    </small>
+
+                </div>
+
+                <button onclick="getLocation()">
+                    Use GPS
+                </button>
+
+            </div>
+
+
+            <!-- INPUT FIELDS -->
+
+            <div class="fields">
+
+                <label>
+
+                    Indoor / manual location
+
+                    <input
+                        id="manualLocation"
+                        placeholder="e.g. Library 2nd floor, near window"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Device type
+
+                    <select id="device">
+
+                        <option>
+                            Phone
+                        </option>
+
+                        <option>
+                            Laptop
+                        </option>
+
+                        <option>
+                            Tablet
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+
+            <!-- RUN BUTTON -->
+
+            <button
+                class="run"
+                id="runBtn"
+                onclick="runTest()"
+            >
+
+                <span>
+                    RUN FULL TEST
+                </span>
+
+                <small>
+                    10 MB TCP transfer + 10 RTT samples
+                </small>
+
+            </button>
+
+
+            <!-- PROGRESS -->
+
+            <div
+                id="progress"
+                class="progress"
+            >
+
+                <div></div>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div
+                id="result"
+                class="result hidden"
+            >
+            </div>
+
+
+        </div>
+
+
+
+        <!-- METHODOLOGY PANEL -->
+
+        <div class="panel methodology">
+
+            <p class="eyebrow">
+                WHAT WE MEASURE
+            </p>
+
+
+            <div class="metric">
+
+                <i>
+                    01
+                </i>
+
+                <div>
+
+                    <b>
+                        Throughput
+                    </b>
+
+                    <span>
+                        10 MB TCP transfer timed from the device
+                        to the C++ server.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <i>
+                    02
+                </i>
+
+                <div>
+
+                    <b>
+                        Latency
+                    </b>
+
+                    <span>
+                        Repeated tiny HTTP/TCP round trips
+                        to estimate RTT and jitter.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <i>
+                    03
+                </i>
+
+                <div>
+
+                    <b>
+                        Network degradation proxy
+                    </b>
+
+                    <span>
+                        Browser-safe proxy based on transfer
+                        behaviour. Native TCP information can
+                        be added later.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <i>
+                    04
+                </i>
+
+                <div>
+
+                    <b>
+                        Concurrency
+                    </b>
+
+                    <span>
+                        A 12-worker C++ thread pool allows
+                        multiple students to test simultaneously.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <b>
+        Campus WiFi Sentinel
+    </b>
+
+    <span>
+        Built with C++17 · TCP sockets · multithreading · Leaflet
+    </span>
+
+</footer>
+
+
+<script src="/js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+bin/
+data/results.csv
+*.exe
+*.o

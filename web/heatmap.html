@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Campus WiFi Sentinel - Heatmap</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="brand">
+
+        <span class="pulse"></span>
+
+        <div>
+
+            <b>Campus WiFi</b>
+
+            <small>SENTINEL</small>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            Dashboard
+        </a>
+
+        <a href="/run-test.html">
+            Run Test
+        </a>
+
+        <a href="/heatmap.html">
+            Heatmap
+        </a>
+
+    </nav>
+
+
+    <div class="live">
+        ● SYSTEM LIVE
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <section class="hero">
+
+        <div>
+
+            <p class="eyebrow">
+                SPATIAL NETWORK ANALYTICS
+            </p>
+
+
+            <h1>
+
+                Campus WiFi<br>
+
+                <span>Heatmap.</span>
+
+            </h1>
+
+
+            <p class="lead">
+
+                Explore WiFi performance across campus
+                using real measurements collected from
+                student devices.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="map-section">
+
+
+        <div class="section-title">
+
+            <div>
+
+                <p class="eyebrow">
+                    CAMPUS COVERAGE
+                </p>
+
+                <h2>
+                    Network health map
+                </h2>
+
+            </div>
+
+
+            <span>
+                GREEN = HEALTHY · RED = DEAD ZONE
+            </span>
+
+        </div>
+
+
+        <!-- LOCATION SEARCH -->
+
+        <div class="heatmap-search">
+
+            <input
+                id="locationSearch"
+                type="text"
+                placeholder="Search campus location..."
+            >
+
+            <button
+                id="searchLocationBtn"
+                onclick="searchLocation()"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <div id="searchMessage"></div>
+
+
+        <div id="mapCanvas"></div>
+
+
+    </section>
+
+
+
+    <section class="recent">
+
+
+        <div class="section-title">
+
+            <div>
+
+                <p class="eyebrow">
+                    MEASUREMENTS
+                </p>
+
+                <h2>
+                    Recent measurements
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            TIME
+                        </th>
+
+                        <th>
+                            LOCATION
+                        </th>
+
+                        <th>
+                            THROUGHPUT
+                        </th>
+
+                        <th>
+                            LATENCY
+                        </th>
+
+                        <th>
+                            LOSS
+                        </th>
+
+                        <th>
+                            DEVICE
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="recentRows">
+
+                    <tr>
+
+                        <td colspan="6">
+                            Loading measurements...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    <b>
+        Campus WiFi Sentinel
+    </b>
+
+
+    <span>
+        Built with C++17 · TCP sockets · multithreading · Leaflet
+    </span>
+
+</footer>
+
+
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<script src="/js/app.js"></script>
+
+
+</body>
+
+</html>
