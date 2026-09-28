@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Campus WiFi Sentinel - Dashboard</title>
+<title>Campus WiFi - Dashboard</title>
 
 <link rel="stylesheet" href="/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
@@ -16,7 +19,7 @@
         <span class="pulse"></span>
         <div>
             <b>Campus WiFi</b>
-            <small>SENTINEL</small>
+            <small>CAMPUS NETWORK</small>
         </div>
     </div>
 
@@ -33,7 +36,7 @@
 
 <section class="hero">
 
-    <div>
+    <div class="hero-copy">
         <p class="eyebrow">NETWORK INTELLIGENCE / CAMPUS</p>
 
         <h1>
@@ -48,19 +51,10 @@
         </p>
 
         <a href="/run-test.html">
-            <button class="primary">⚡ Run WiFi Test</button>
+            <button class="primary">Run WiFi Test</button>
         </a>
     </div>
 
-    <div class="hero-card">
-        <div class="ring">WF</div>
-
-        <div>
-            <span>Campus health</span>
-            <strong id="health">—</strong>
-            <small id="healthText">Waiting for measurements</small>
-        </div>
-    </div>
 
 </section>
 
@@ -106,6 +100,15 @@
             View full heatmap →
         </a>
 
+    </div>
+
+    <div class="health-strip">
+        <div class="ring">WF</div>
+        <div class="health-meta">
+            <span>Campus health</span>
+            <strong id="health">—</strong>
+            <small id="healthText">Waiting for measurements</small>
+        </div>
     </div>
 
     <div id="mapCanvas"></div>
@@ -155,7 +158,7 @@
 
 
 <footer>
-    <b>Campus WiFi Sentinel</b>
+    <b>Campus WiFi</b>
     <span>Built with C++17 · TCP sockets · multithreading · Leaflet</span>
 </footer>
 

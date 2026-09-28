@@ -1,5 +1,5 @@
 ﻿// ============================================================
-// CAMPUS WIFI SENTINEL
+// CAMPUS WIFI
 // Frontend JavaScript
 // ============================================================
 
@@ -13,6 +13,39 @@ var zoneLayers = [];
 var measurementLayers = [];
 
 var defaultCenter = [18.4639, 73.8677];
+
+// THEME - mirrors CSS :root palette
+// https://colorhunt.co/palette/e3f2fd90caf92196f30d47a1
+function getThemeColor(name, fallback) {
+    try {
+        var v = getComputedStyle(document.documentElement).getPropertyValue(name);
+        v = (v || '').trim();
+        return v || fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+var THEME = {
+    lightest: '#E3F2FD',
+    light: '#90CAF9',
+    primary: '#2196F3',
+    dark: '#0D47A1',
+    success: '#1B7A3D',
+    warning: '#8A5D00',
+    danger: '#B3261E',
+    muted: '#33507A'
+};
+try {
+    THEME.lightest = getThemeColor('--palette-50', THEME.lightest);
+    THEME.light = getThemeColor('--palette-200', THEME.light);
+    THEME.primary = getThemeColor('--palette-500', THEME.primary);
+    THEME.dark = getThemeColor('--palette-900', THEME.dark);
+    THEME.success = getThemeColor('--health-good', THEME.success);
+    THEME.warning = getThemeColor('--health-moderate', THEME.warning);
+    THEME.danger = getThemeColor('--health-poor', THEME.danger);
+    THEME.muted = getThemeColor('--muted', THEME.muted);
+} catch (e) {}
+
 
 var currentLocation = null;
 var searchedLocation = null;
@@ -140,8 +173,8 @@ function initializeMap() {
             zone.center,
             {
                 radius: 90,
-                color: "#ff5f6d",
-                fillColor: "#ff5f6d",
+                color: THEME.danger,
+                fillColor: THEME.danger,
                 fillOpacity: 0.12,
                 weight: 1
             }
@@ -168,7 +201,7 @@ function initializeMap() {
         .addTo(map)
         .bindPopup(
             "<b>VIT Pune</b><br>" +
-            "Campus WiFi Sentinel"
+            "Campus WiFi"
         );
 }
 
@@ -423,7 +456,7 @@ async function searchLocation() {
                 "Please enter a location.";
 
             message.style.color =
-                "#ff5f6d";
+                THEME.danger;
         }
 
         return;
@@ -436,7 +469,7 @@ async function searchLocation() {
             "Searching...";
 
         message.style.color =
-            "#888";
+            THEME.muted;
     }
 
 
@@ -477,7 +510,7 @@ async function searchLocation() {
                     "Location not found.";
 
                 message.style.color =
-                    "#ff5f6d";
+                    THEME.danger;
             }
 
             return;
@@ -563,7 +596,7 @@ async function searchLocation() {
             lng.toFixed(6) +
             "<br><br>" +
 
-            "<span style='color:#ff5f6d'>" +
+            "<span style='color:" + THEME.danger + ";'>" +
             "Search result only â€” not used for WiFi testing." +
             "</span>"
         );
@@ -579,7 +612,7 @@ async function searchLocation() {
                 place.display_name;
 
             message.style.color =
-                "#45e58b";
+                THEME.success;
         }
 
     } catch (error) {
@@ -596,7 +629,7 @@ async function searchLocation() {
                 "Could not search location.";
 
             message.style.color =
-                "#ff5f6d";
+                THEME.danger;
         }
     }
 }
@@ -1149,21 +1182,21 @@ async function runTest() {
         if (isDeadZone(score)) {
 
             warning =
-                "<p style='color:#ff5f6d; font-weight:bold;'>" +
+                "<p style='color:" + THEME.danger + ";font-weight:bold;'>" +
                 "âš  POTENTIAL WIFI DEAD ZONE DETECTED" +
                 "</p>";
 
         } else if (score < 75) {
 
             warning =
-                "<p style='color:#ffd166; font-weight:bold;'>" +
+                "<p style='color:" + THEME.warning + ";font-weight:bold;'>" +
                 "âš  MODERATE WIFI QUALITY" +
                 "</p>";
 
         } else {
 
             warning =
-                "<p style='color:#45e58b; font-weight:bold;'>" +
+                "<p style='color:" + THEME.success + ";font-weight:bold;'>" +
                 "âœ“ HEALTHY WIFI ZONE" +
                 "</p>";
         }
@@ -1390,41 +1423,38 @@ async function refresh() {
             if (avgThroughput) {
 
                 avgThroughput.textContent =
-                    averageThroughput.toFixed(1) +
-                    " Mbps";
+                    averageThroughput.toFixed(1);
             }
 
 
             if (avgLatency) {
 
                 avgLatency.textContent =
-                    averageLatency.toFixed(1) +
-                    " ms";
+                    averageLatency.toFixed(1);
             }
 
 
             if (avgLoss) {
 
                 avgLoss.textContent =
-                    averageLoss.toFixed(1) +
-                    "%";
+                    averageLoss.toFixed(1);
             }
 
         } else {
 
             if (avgThroughput) {
                 avgThroughput.textContent =
-                    "0 Mbps";
+                    "0";
             }
 
             if (avgLatency) {
                 avgLatency.textContent =
-                    "0 ms";
+                    "0";
             }
 
             if (avgLoss) {
                 avgLoss.textContent =
-                    "0%";
+                    "0";
             }
         }
 
@@ -1862,7 +1892,7 @@ async function refresh() {
                 // ------------------------------------------------
 
                 var markerColor =
-                    "#ff5f6d";
+                    THEME.danger;
 
 
                 if (
@@ -1870,14 +1900,14 @@ async function refresh() {
                 ) {
 
                     markerColor =
-                        "#45e58b";
+                        THEME.success;
 
                 } else if (
                     groupScore >= 45
                 ) {
 
                     markerColor =
-                        "#ffd166";
+                        THEME.warning;
                 }
 
 
@@ -1931,7 +1961,7 @@ async function refresh() {
                     statusMessage =
 
                         "<div style='" +
-                        "color:#ff5f6d;" +
+                        "color:" + THEME.danger + ";" +
                         "font-weight:bold;" +
                         "font-size:15px;" +
                         "margin-bottom:8px;" +
@@ -1948,7 +1978,7 @@ async function refresh() {
                     statusMessage =
 
                         "<div style='" +
-                        "color:#d49b00;" +
+                        "color:" + THEME.warning + ";" +
                         "font-weight:bold;" +
                         "margin-bottom:8px;" +
                         "'>" +
@@ -1962,7 +1992,7 @@ async function refresh() {
                     statusMessage =
 
                         "<div style='" +
-                        "color:#168f50;" +
+                        "color:" + THEME.success + ";" +
                         "font-weight:bold;" +
                         "margin-bottom:8px;" +
                         "'>" +
@@ -2037,14 +2067,582 @@ async function refresh() {
 
 
 // ============================================================
+// SMOOTH SCROLL REVEAL
+// Transform + opacity only. Disabled for reduced motion.
+// ============================================================
+
+function setupReveals() {
+
+    try {
+
+        if (
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches
+        ) {
+            return;
+        }
+
+
+        if (
+            typeof IntersectionObserver ===
+            "undefined"
+        ) {
+            return;
+        }
+
+
+        var targets =
+            document.querySelectorAll(
+                ".hero > div, " +
+                ".health-strip, " +
+                ".stats > div, " +
+                ".panel, " +
+                ".map-section, " +
+                ".recent, " +
+                ".section-title"
+            );
+
+
+        for (
+            var i = 0;
+            i < targets.length;
+            i++
+        ) {
+
+            var element =
+                targets[i];
+
+
+            if (
+                element.classList.contains(
+                    "reveal"
+                )
+            ) {
+                continue;
+            }
+
+
+            element.classList.add(
+                "reveal"
+            );
+
+
+            element.style.setProperty(
+                "--reveal-delay",
+                (i % 4) * 70 + "ms"
+            );
+        }
+
+
+        var reveals =
+            document.querySelectorAll(
+                ".reveal"
+            );
+
+
+        if (
+            reveals.length === 0
+        ) {
+            return;
+        }
+
+
+        var observer =
+            new IntersectionObserver(
+                function(entries) {
+
+                    for (
+                        var e = 0;
+                        e < entries.length;
+                        e++
+                    ) {
+
+                        var entry =
+                            entries[e];
+
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+                        }
+                    }
+                },
+                {
+                    threshold: 0.12,
+                    rootMargin:
+                        "0px 0px -8% 0px"
+                }
+            );
+
+
+        for (
+            var r = 0;
+            r < reveals.length;
+            r++
+        ) {
+            observer.observe(
+                reveals[r]
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Reveal setup failed:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
+// WEBSPHERE BACKDROP
+// Small rotating wireframe graph sphere on 2D canvas.
+// Theme colours only. Paused when hidden / reduced motion.
+// ============================================================
+
+function setupWebsphere() {
+
+    try {
+
+        if (
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches
+        ) {
+            return;
+        }
+
+
+        var canvas =
+            document.getElementById(
+                "websphere-bg"
+            );
+
+
+        if (!canvas) {
+
+            canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            canvas.id =
+                "websphere-bg";
+
+
+            canvas.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            var hero =
+                document.querySelector(
+                    ".hero"
+                );
+
+
+            if (hero) {
+                hero.appendChild(
+                    canvas
+                );
+            } else {
+                document.body.prepend(
+                    canvas
+                );
+            }
+        }
+
+
+        var context =
+            canvas.getContext("2d");
+
+
+        if (!context) {
+            return;
+        }
+
+
+        var NODE_COUNT = 90;
+        var LINK_DISTANCE = 0.85;
+        var ROTATION_SPEED = 0.0016;
+        var TILT = 0.35;
+
+
+        var nodes = [];
+        var links = [];
+
+        var goldenAngle =
+            Math.PI *
+            (3 - Math.sqrt(5));
+
+
+        for (
+            var i = 0;
+            i < NODE_COUNT;
+            i++
+        ) {
+
+            var y =
+                1 -
+                (i /
+                    (NODE_COUNT - 1)) *
+                    2;
+
+
+            var radius =
+                Math.sqrt(
+                    Math.max(
+                        0,
+                        1 - y * y
+                    )
+                );
+
+
+            var theta =
+                goldenAngle * i;
+
+
+            nodes.push({
+                x:
+                    Math.cos(theta) *
+                    radius,
+                y: y,
+                z:
+                    Math.sin(theta) *
+                    radius
+            });
+        }
+
+
+        for (
+            var a = 0;
+            a < nodes.length;
+            a++
+        ) {
+
+            for (
+                var b = a + 1;
+                b < nodes.length;
+                b++
+            ) {
+
+                var dx =
+                    nodes[a].x -
+                    nodes[b].x;
+
+                var dy =
+                    nodes[a].y -
+                    nodes[b].y;
+
+                var dz =
+                    nodes[a].z -
+                    nodes[b].z;
+
+
+                var distance =
+                    Math.sqrt(
+                        dx * dx +
+                        dy * dy +
+                        dz * dz
+                    );
+
+
+                if (
+                    distance <
+                    LINK_DISTANCE
+                ) {
+                    links.push([a, b]);
+                }
+            }
+        }
+
+
+        var angle = 0;
+        var running = true;
+
+
+        function resize() {
+
+            var size =
+                canvas.clientWidth ||
+                440;
+
+
+            var dpr = Math.min(
+                window.devicePixelRatio ||
+                    1,
+                1.5
+            );
+
+
+            canvas.width =
+                size * dpr;
+
+            canvas.height =
+                size * dpr;
+
+
+            context.setTransform(
+                dpr,
+                0,
+                0,
+                dpr,
+                0,
+                0
+            );
+        }
+
+
+        resize();
+
+
+        window.addEventListener(
+            "resize",
+            resize
+        );
+
+
+        document.addEventListener(
+            "visibilitychange",
+            function() {
+                running =
+                    !document.hidden;
+            }
+        );
+
+
+        function frame() {
+
+            requestAnimationFrame(
+                frame
+            );
+
+
+            if (!running) {
+                return;
+            }
+
+
+            var size =
+                canvas.clientWidth ||
+                440;
+
+
+            var center =
+                size / 2;
+
+
+            var sphereRadius =
+                size * 0.36;
+
+
+            angle +=
+                ROTATION_SPEED;
+
+
+            var cosA =
+                Math.cos(angle);
+
+            var sinA =
+                Math.sin(angle);
+
+            var cosT =
+                Math.cos(TILT);
+
+            var sinT =
+                Math.sin(TILT);
+
+
+            context.clearRect(
+                0,
+                0,
+                size,
+                size
+            );
+
+
+            var projected = [];
+
+
+            for (
+                var n = 0;
+                n < nodes.length;
+                n++
+            ) {
+
+                var node =
+                    nodes[n];
+
+
+                var x1 =
+                    node.x * cosA -
+                    node.z * sinA;
+
+                var z1 =
+                    node.x * sinA +
+                    node.z * cosA;
+
+
+                var y2 =
+                    node.y * cosT -
+                    z1 * sinT;
+
+                var z2 =
+                    node.y * sinT +
+                    z1 * cosT;
+
+
+                var perspective =
+                    2.6 /
+                    (2.6 - z2 * 0.7);
+
+
+                projected.push({
+                    x:
+                        center +
+                        x1 *
+                            sphereRadius *
+                            perspective,
+                    y:
+                        center +
+                        y2 *
+                            sphereRadius *
+                            perspective,
+                    depth:
+                        (z2 + 1) / 2
+                });
+            }
+
+
+            context.lineWidth = 1;
+
+            context.strokeStyle =
+                THEME.primary;
+
+
+            context.globalAlpha =
+                0.28;
+
+
+            context.beginPath();
+
+
+            for (
+                var l = 0;
+                l < links.length;
+                l++
+            ) {
+
+                var p1 =
+                    projected[
+                        links[l][0]
+                    ];
+
+                var p2 =
+                    projected[
+                        links[l][1]
+                    ];
+
+
+                context.moveTo(
+                    p1.x,
+                    p1.y
+                );
+
+                context.lineTo(
+                    p2.x,
+                    p2.y
+                );
+            }
+
+
+            context.stroke();
+
+
+            context.globalAlpha = 1;
+
+
+            for (
+                var m = 0;
+                m < projected.length;
+                m++
+            ) {
+
+                var point =
+                    projected[m];
+
+
+                var dotRadius =
+                    1 +
+                    point.depth *
+                        1.8;
+
+
+                context.beginPath();
+
+
+                context.fillStyle =
+                    point.depth > 0.55
+                        ? THEME.dark
+                        : THEME.primary;
+
+
+                context.arc(
+                    point.x,
+                    point.y,
+                    dotRadius,
+                    0,
+                    Math.PI * 2
+                );
+
+
+                context.fill();
+            }
+        }
+
+
+        frame();
+
+    } catch (error) {
+
+        console.error(
+            "Websphere setup failed:",
+            error
+        );
+    }
+}
+
+
+// ============================================================
 // INITIALIZATION
 // ============================================================
 
 function initializeApp() {
 
     console.log(
-        "Campus WiFi Sentinel JavaScript loaded."
+        "Campus WiFi JavaScript loaded."
     );
+
+
+    setupReveals();
+
+
+    setupWebsphere();
 
 
     initializeMap();
