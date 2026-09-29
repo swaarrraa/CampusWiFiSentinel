@@ -1,8 +1,12 @@
 @echo off
 
+if exist "%LOCALAPPDATA%\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin\g++.exe" (
+    set "PATH=%LOCALAPPDATA%\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;%PATH%"
+)
+
 if not exist bin mkdir bin
 
-g++ -std=c++17 -O2 -pthread ^
+g++ -std=c++17 -O2 -pthread -static ^
 backend\main.cpp ^
 backend\server\HttpServer.cpp ^
 backend\tests\MeasurementEngine.cpp ^
